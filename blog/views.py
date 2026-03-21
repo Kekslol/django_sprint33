@@ -2,9 +2,10 @@ from django.shortcuts import render, get_object_or_404
 from django.utils import timezone
 from .models import Category, Post
 
+
 def index(request):
     template = 'blog/index.html'
-    
+
     # ✅ Добавьте [:5] в конце — ограничиваем до 5 постов
     posts = Post.objects.select_related(
         'category', 'location', 'author'
@@ -13,9 +14,11 @@ def index(request):
         category__is_published=True,
         pub_date__lte=timezone.now()
     ).order_by('-pub_date')[:5]
-    
+
     context = {'post_list': posts}
     return render(request, template, context)
+
+
 def category_posts(request, slug):
     template = 'blog/category.html'
     category = get_object_or_404(
