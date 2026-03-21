@@ -3,6 +3,7 @@ from django.db import models
 
 User = get_user_model()
 
+
 class Location(models.Model):
     name = models.CharField('Название места', max_length=256)
     is_published = models.BooleanField(
@@ -32,7 +33,8 @@ class Category(models.Model):
     )
     is_published = models.BooleanField(
         'Опубликовано',
-        default=True
+        default=True,
+        help_text='Снимите галочку, чтобы скрыть публикацию.'
     )
     created_at = models.DateTimeField(
         'Добавлено',
@@ -85,7 +87,6 @@ class Post(models.Model):
     class Meta:
         verbose_name = 'публикация'
         verbose_name_plural = 'Публикации'
-        # Сортировка по умолчанию: новые сверху
         ordering = ('-pub_date',)
 
     def __str__(self):
